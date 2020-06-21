@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="a-Bot">
+	<meta name="author" content="Manasseh">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<script src="https://kit.fontawesome.com/3dc89e56d7.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+	<!-- External CSS -->
+	<link type="text/css" rel="stylesheet" href="{% static 'css/bot.css' %}">
+	<title>a-Bot</title>
+</head>
+<body>
+	<!-- Logo & Navigation Links -->
+	<header>
+		<div class="logo-container">
+			<img src="{% static 'img/abot1.png' %}" height="50" width="70" alt="async bot">
+		</div>
+		<nav>
+			<ul class="navigation">
+				<li><a href="#" class="nav-link">Home</a></li>
+				<li><a href="#" class="nav-link">About</a></li>
+				<li><a href="#" class="nav-link">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+	<!-- Main Page Content -->
+    <main class="container">
+
+    	<section class="jumbotron mt-1">
+	        <h1 class="jumbotron-heading text-xs-center">a-Bot's Conversation</h1>
+	        <p class="lead text-xs-center">
+	          This app was built using Python's Chatterbot library
+	        </p>
+
+	        <hr class="my-2">
+
+	        <div class="row">
+	        	<div class="col-xs-6 offset-xs-3">
+		            <ul class="list-group chat-log js-chat-log">
+		            </ul>
+
+		            <div class="input-group input-group-lg mt-1">
+		              <input type="text" class="form-control js-text" placeholder="Begin conversation with a-Bot..."/>
+		              <span class="input-group-btn">
+		                <button class="btn btn-primary js-say">Send</button>
+		              </span>
+		            </div>
+	            
+	        	</div>
+	    	</div>
+    	</section>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+		<div class="container">
+			<span>
+				<a href="https://twitter.com/___manasseh"><i class="fab fa-twitter"></i></a>
+				<a href="https://linkedin.com/in/believemanasseh"><i class="fab fa-linkedin"></i></a>
+			</span>
+		</div>
+	</footer>
+
+	<!-- jquery, js-cookie & bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+
+    <script>
+      var chatterbotUrl = '{% url "a-bot" %}';
+      var csrftoken = Cookies.get('csrftoken');
+
+      function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+        }
+      });
+
+      var $chatlog = $('.js-chat-log');
+      var $input = $('.js-text');
+      var $sayButton = $('.js-say');
+
+      function createRow(text) {
+        var $row = $('<li class="list-group-item"></li>');
+
+        $row.text(text);
+        $chatlog.append($row);
+      }
+
+      function submitInput() {
+        var inputData = {
+          'text': $input.val()
+        }
+
+        // Display the user's input on the web page
+        createRow(inputData.text);
+
+        var $submit = $.ajax({
+          type: 'POST',
+          url: chatterbotUrl,
+          data: JSON.stringify(inputData),
+          contentType: 'application/json'
+        });
+
+        $submit.done(function(statement) {
+            createRow(statement.text);
+
+            // Clear the input field
+            $input.val('');
+
+            // Scroll to the bottom of the chat interface
+            $chatlog[0].scrollTop = $chatlog[0].scrollHeight;
+        });
+
+        $submit.fail(function() {
+          // TODO: Handle errors
+        });
+      }
+
+      $sayButton.click(function() {
+        submitInput();
+      });
+
+      $input.keydown(function(event) {
+        // Submit the input when the enter button is pressed
+        if (event.keyCode == 13) {
+          submitInput();
+        }
+      });
+    </script>
+</body>
+</html>
+
+
+<!--<main>
+		<div id="app" class="container mt-4">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card col-md-6" v-for="message in messages" v-bind:class="{'user-message': message.user, 'chat-message': message.chat_bot, 'offset-md-6': message.chat_bot}">
+						<div class="card-body">
+							{{message.text}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-5">
+				<div class="col-md-12">
+					<textarea class="form-control" v-bind:placeholder="placeholder" v-model="input" v-bind:class="{'border-danger': send_blank}" v-on:change="check_content"></textarea>
+					<a href="#"><i class="fas fa-arrow-alt-circle-right" v-on:click="add_message"></i></a>
+				</div>
+			</div>
+		</div>
+	</main>-->
