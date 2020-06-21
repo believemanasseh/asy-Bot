@@ -41,9 +41,6 @@ main {
 .logo-container,
 .navigation {
 	display: flex;
-}
-
-.navigation {
 	list-style: none;
 }
 
@@ -51,7 +48,6 @@ main {
 	color: #ffffff;
 	text-decoration-style: none;
 	font-size: 18px;
-	justify-content: flex-end;
 }
 .nav-link:hover {
 	color: #006400;
