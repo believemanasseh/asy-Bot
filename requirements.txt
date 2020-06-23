@@ -36,8 +36,10 @@ pyparsing==2.4.7
 python-dateutil==2.7.5
 pytz==2020.1
 PyYAML==3.13
+redis==3.5.3
 regex==2020.6.8
 requests==2.24.0
+rq==1.4.2 
 s3transfer==0.3.3
 six==1.15.0
 spacy==2.1.9
