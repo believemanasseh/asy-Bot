@@ -29,7 +29,7 @@
 	<!-- Main Page Content -->
     <main class="container">
 
-    	<section class="jumbotron mt-1">
+    	<section class="jumbotron mt-1">{% csrf_token %}
 	        <h1 class="jumbotron-heading text-xs-center">a-Bot's Conversation</h1>
 	        <p class="lead text-xs-center">
 	          This is a development version of my Django chatbot...
@@ -55,13 +55,13 @@
     </main>
     <!-- Footer -->
     <footer class="footer">
-		<div class="container">
-			<span>
-				<a href="https://twitter.com/___manasseh"><i class="fab fa-twitter"></i></a>
-				<a href="https://linkedin.com/in/believemanasseh"><i class="fab fa-linkedin"></i></a>
-			</span>
-		</div>
-	</footer>
+  		<div class="container">
+  			<span>
+  				<a href="https://twitter.com/___manasseh"><i class="fab fa-twitter"></i></a>
+  				<a href="https://linkedin.com/in/believemanasseh"><i class="fab fa-linkedin"></i></a>
+  			</span>
+  		</div>
+    </footer>
 
 	<!-- jquery, js-cookie & bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -69,7 +69,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 
     <script>
-      var chatterbotUrl = '{% url "a-bot" %}';
+      var chatterbotUrl = '{% url "chatterbot" %}';
       var csrftoken = Cookies.get('csrftoken');
 
       function csrfSafeMethod(method) {

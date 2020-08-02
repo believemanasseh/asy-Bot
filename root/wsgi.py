@@ -1,5 +1,5 @@
 """
-WSGI config for django_chatbot project.
+WSGI config for chatbot project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

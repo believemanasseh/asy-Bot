@@ -1,5 +1,5 @@
 """
-ASGI config for django_chatbot project.
+ASGI config for chatbot project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
